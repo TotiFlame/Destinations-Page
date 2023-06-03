@@ -12,7 +12,7 @@ function Cards() {
 
   return (
     <div
-      className={`relative w-72 h-80 shadow-xl shadow-slate-600 mt-20 rounded-3xl 
+      className={`relative w-72 h-80 shadow-xl shadow-slate-600 rounded-3xl 
                 transform transition-transform duration-700 transform-styles-3d ${
                   isFlipped ? 'rotate-y-180' : ''
                 }`}
@@ -33,8 +33,8 @@ function Cards() {
                 Uruguay, Punta Ballena
               </span>
               <button
-                className="w-full h-8 bg-orange-600 rounded-3xl text-sm font-semibold
-                          text-white hover:shadow-inner"
+                className="w-full h-8 bg-transparent border-2 border-orange-600 rounded-3xl text-sm font-semibold
+                          text-white hover:shadow-inner hover:bg-orange-600 transition"
                 onClick={handleFlip}
               >
                 Details
@@ -43,17 +43,22 @@ function Cards() {
           </div>
         </div>
       </div>
-      <div className="w-full h-full absolute rounded-3xl inset-0 backface-hidden bg-blue-950 rotate-y-180 flex flex-col">
+      <div className="w-full h-full absolute rounded-3xl inset-0 backface-hidden bg-slate-800 rotate-y-180 flex flex-col">
         <span className="w-full pt-4 text-center text-base font-semibold text-white">
           Description
         </span>
-        <p className="m-4 text-center text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto itaque inventore ab reprehenderit adipisci fugit laborum quis et, necessitatibus sapiente vel tempore modi dolorum enim nobis minima! Modi, perferendis quia.</p>
+        <p className="m-4 text-center text-white">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto itaque
+          inventore ab reprehenderit adipisci fugit laborum quis et,
+          necessitatibus sapiente vel tempore modi dolorum enim nobis minima!
+          Modi, perferendis quia.
+        </p>
         <button
-          className="w-8 h-8 my-3 ml-3 bg-orange-600 rounded-3xl text-sm font-semibold
-                          text-white hover:shadow-inner flex items-center justify-center"
+          className="w-8 h-8 my-3 ml-3 bg-transition border-2 border-orange-600 transition rounded-3xl text-sm font-semibold
+                          text-white flex items-center justify-center hover:shadow-inner hover:bg-orange-600"
           onClick={handleFlip}
         >
-          <img src={back} alt="" className="w-4 h-4"/>
+          <img src={back} alt="" className="w-4 h-4" />
         </button>
       </div>
     </div>

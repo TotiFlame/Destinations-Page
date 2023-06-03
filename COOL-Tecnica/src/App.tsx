@@ -13,7 +13,7 @@ function App() {
         </div>
       </section>
       <section className="w-full flex justify-center bg-purple-50">
-        <div className="w-10/12 grid grid-cols-3 grid-rows-3 justify-items-center perspective-30">
+        <div className="w-10/12 grid grid-cols-3 grid-rows-3 gap-10 pt-20 justify-items-center perspective-30">
           <Cards />
           <Cards />
           <Cards />

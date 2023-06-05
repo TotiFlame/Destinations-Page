@@ -1,6 +1,7 @@
 import Cards from './components/Card';
 import Searcher from './components/Searcher';
 import Header from './components/Header';
+import Destination, { getDestinationData } from './models/Destination';
 
 function App() {
   return (
@@ -14,10 +15,10 @@ function App() {
       </section>
       <section className="w-full flex justify-center bg-purple-50">
         <div className="w-10/12 grid grid-cols-3 grid-rows-3 gap-10 pt-20 justify-items-center perspective-30">
-          <Cards />
-          <Cards />
-          <Cards />
-          <Cards />
+          {getDestinationData().map((destination : Destination) =>
+          (
+            <Cards name={destination.name} country={destination.country} state={destination.state} description={destination.description} />
+          ))}
         </div>
       </section>
     </>

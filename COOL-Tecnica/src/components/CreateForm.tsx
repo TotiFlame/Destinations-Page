@@ -1,30 +1,19 @@
 import Cards from './Card';
 import Destination from '../models/Destination';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 type CreateFormProps = {
   visible?: boolean;
   onClose: () => void;
 };
 
-function save() {
-  const destinations = new Destination(
-    undefined,
-    'Punta mi gorda',
-    'Uruguay',
-    'Maldonado',
-    'Bjsadjaisdjsaijdisadjsiaodoisaidsa',
-    'punta.jpg'
-  );
-
-  destinations.storeData();
-}
-
 function CreateForm({ visible = false, onClose }: CreateFormProps) {
   const [name, setName] = useState('');
   const [country, setCountry] = useState('');
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
+  const [base64Image, setBase64Image] = useState<string>('');
+
 
   const handleOnClose = (e: any) => {
     if (e.target.id === 'containerForm') onClose();
@@ -48,6 +37,18 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
 
   if (!visible) return null;
 
+  const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        setBase64Image(base64);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div
       id="containerForm"
@@ -60,7 +61,9 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
           New Destination
         </h2>
         <div className="w-72 h-80 flex flex-col">
-          <span className="text-xs font-semibold mb-1 text-gray-500">Name</span>
+          <label className="text-xs font-semibold mb-1 text-gray-500">
+            Name
+          </label>
           <input
             type="text"
             placeholder="Punta del Este"
@@ -69,9 +72,9 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
             value={name}
             onChange={handleName}
           />
-          <span className="text-xs font-semibold mb-1 text-gray-500">
+          <label className="text-xs font-semibold mb-1 text-gray-500">
             Country
-          </span>
+          </label>
           <input
             type="text"
             placeholder="Uruguay"
@@ -79,9 +82,9 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
             value={country}
             onChange={handleCountry}
           />
-          <span className="text-xs font-semibold mb-1 text-gray-500">
+          <label className="text-xs font-semibold mb-1 text-gray-500">
             State
-          </span>
+          </label>
           <input
             type="text"
             placeholder="Maldonado"
@@ -89,9 +92,9 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
             value={state}
             onChange={handleState}
           />
-          <span className="text-xs font-semibold mb-1 text-gray-500">
+          <label className="text-xs font-semibold mb-1 text-gray-500">
             Description
-          </span>
+          </label>
           <input
             type="text"
             placeholder="Description"
@@ -99,16 +102,37 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
             value={description}
             onChange={handleDescription}
           />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
           <button
             className="bg-orange-600 text-sm font-semibold
                           text-white w-full py-2.5 rounded-md mt-3"
-            onClick={save}
+            onClick={() => {
+              const destinations = new Destination(
+              undefined,
+              {name}.name,
+              {country}.country,
+              {state}.state,
+              {description}.description,
+              {base64Image}.base64Image
+            );
+              destinations.storeData();
+            }}
           >
             Submit
           </button>
         </div>
         <div className=" w-2/5 h-5/6 flex justify-center items-center rounded-xl">
-          <Cards name={name} country={country} state={state} description={description}/>
+          <Cards
+            name={name}
+            country={country}
+            state={state}
+            description={description}
+            image={base64Image}
+          />
         </div>
       </div>
     </div>

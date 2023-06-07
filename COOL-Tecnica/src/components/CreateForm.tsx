@@ -1,4 +1,4 @@
-import Cards from './Card';
+import Card from './Card';
 import Destination from '../models/Destination';
 import { ChangeEvent, useState } from 'react';
 
@@ -13,7 +13,6 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
   const [state, setState] = useState('');
   const [description, setDescription] = useState('');
   const [base64Image, setBase64Image] = useState<string>('');
-
 
   const handleOnClose = (e: any) => {
     if (e.target.id === 'containerForm') onClose();
@@ -41,11 +40,11 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
+      reader.readAsDataURL(file);
       reader.onloadend = () => {
         const base64 = reader.result as string;
         setBase64Image(base64);
       };
-      reader.readAsDataURL(file);
     }
   };
 
@@ -56,11 +55,11 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
       backdrop-blur-sm top-0 flex flex-col justify-center items-center"
       onClick={handleOnClose}
     >
-      <div className="relative bg-purple-50 rounded p-2 w-3/4 h-3/4 flex flex-row items-center justify-around">
-        <h2 className="absolute font-semibold text-lg my-3 text-slate-700 top-0">
+      <div className="relative bg-purple-50 rounded p-2 w-3/4 h-5/6 flex lg:flex-row items-center justify-around md:flex-col sm:flex-col">
+        <h2 className="absolute font-semibold text-lg my-3 text-slate-700 lg:top-1 md:top-3 sm:top-0">
           New Destination
         </h2>
-        <div className="w-72 h-80 flex flex-col">
+        <div className="w-72 h-80 flex flex-col md:mt-20 lg:mt-0 sm:w-64 sm:mt-12 sm:mb-8">
           <label className="text-xs font-semibold mb-1 text-gray-500">
             Name
           </label>
@@ -102,31 +101,37 @@ function CreateForm({ visible = false, onClose }: CreateFormProps) {
             value={description}
             onChange={handleDescription}
           />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-          />
+          <div className="relative bg-slate-200 w-full h-12 rounded py-2 flex justify-center items-center">
+            <label className="text-xs font-semibold text-gray-500">
+              Add Image
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="absolute opacity-0 top-0 left-0 w-full"
+            />
+          </div>
           <button
             className="bg-orange-600 text-sm font-semibold
                           text-white w-full py-2.5 rounded-md mt-3"
             onClick={() => {
-              const destinations = new Destination(
-              undefined,
-              {name}.name,
-              {country}.country,
-              {state}.state,
-              {description}.description,
-              {base64Image}.base64Image
-            );
-              destinations.storeData();
+              const newDestination = new Destination(
+                undefined,
+                name,
+                country,
+                state,
+                description,
+                base64Image
+              );
+              newDestination.storeData();
             }}
           >
             Submit
           </button>
         </div>
-        <div className=" w-2/5 h-5/6 flex justify-center items-center rounded-xl">
-          <Cards
+        <div className=" w-2/5 h-5/6 flex justify-center items-center rounded-xl md:mt-16 lg:mt-0 ">
+          <Card
             name={name}
             country={country}
             state={state}

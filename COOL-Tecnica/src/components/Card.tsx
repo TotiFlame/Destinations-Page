@@ -2,7 +2,7 @@ import { useState } from 'react';
 import locationIcon from '../images/location.svg';
 import back from '../images/back-arrow.svg';
 
-function Cards({
+function Card({
   name = '',
   country = '',
   state = '',
@@ -14,6 +14,7 @@ function Cards({
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
+
   return (
     <div
       className={`relative w-72 h-80 shadow-xl shadow-slate-600 rounded-3xl 
@@ -22,11 +23,13 @@ function Cards({
                 }`}
     >
       <div className="w-full h-full absolute inset-0 backface-hidden">
-        <img
-          src={ image }
-          alt=""
-          className="w-full h-full rounded-3xl"
-        />
+        { image && (
+          <img
+            src={ image }
+            alt=""
+            className="w-full h-full rounded-3xl"
+          />
+        ) }
         <div
           className="absolute inset-0 rounded-2xl bg-gradient-to-b
                       from-transparent via-black via-85% to-black to-90%
@@ -71,4 +74,4 @@ function Cards({
   );
 }
 
-export default Cards;
+export default Card;

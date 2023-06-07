@@ -18,12 +18,13 @@ function Header() {
         <span className="text-slate-300 font-extrabold pl-4">
           DestinyFinder
         </span>
-        <span
-          className="text-slate-300 font-medium cursor-pointer pr-4"
+        <button
+          className="bg-slate-800 bg-opacity-20 backdrop-filter backdrop-blur-lg mr-4
+          py-1.5 px-10 text-sm font-semibold text-gray-400 rounded-3xl transition hover:bg-slate-800 hover:text-gray-200"
           onClick={handleForm}
         >
-          Create destination
-        </span>
+          Create
+        </button>
       </header>
       <CreateForm onClose={handleOnClose} visible={openForm} />
     </>
